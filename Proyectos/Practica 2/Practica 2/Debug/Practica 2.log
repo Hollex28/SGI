@@ -1,0 +1,8 @@
+﻿  Estrella de David.cpp
+c:\users\adtenla\desktop\sgi\proyectos\practica 2\practica 2\estrella de david.cpp(19): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+c:\users\adtenla\desktop\sgi\proyectos\practica 2\practica 2\estrella de david.cpp(23): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\adtenla\desktop\sgi\proyectos\practica 2\practica 2\estrella de david.cpp(25): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\adtenla\desktop\sgi\proyectos\practica 2\practica 2\estrella de david.cpp(30): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\adtenla\desktop\sgi\proyectos\practica 2\practica 2\estrella de david.cpp(32): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\adtenla\desktop\sgi\proyectos\practica 2\practica 2\estrella de david.cpp(47): warning C4326: el tipo de valor devuelto de 'main' debe ser 'int' en lugar de 'void'
+  Practica 2.vcxproj -> C:\Users\adtenla\Desktop\SGI\Proyectos\Practica 2\Debug\Practica 2.exe

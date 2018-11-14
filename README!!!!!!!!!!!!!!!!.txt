@@ -1,0 +1,2 @@
+Visual Estudio solo funciona en C no en W crea una carpeta proyectos en el escritorio y trabaja hay,
+ recuerda que de vez en cuando tendras que actualizar las variables de escritorio, mirar configuracion de visualbasic en la practica1
