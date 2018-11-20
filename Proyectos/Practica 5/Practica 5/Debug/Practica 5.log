@@ -1,0 +1,15 @@
+﻿  Reloj.cpp
+c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(29): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
+c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(30): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
+c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(35): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
+c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(36): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
+c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(38): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
+c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(252): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\adtenla\desktop\sgi\proyectos\practica 5\practica 5\reloj.cpp(31): warning C4305: 'argumento': truncamiento de 'double' a 'GLclampf'
+c:\users\adtenla\desktop\sgi\proyectos\practica 5\practica 5\reloj.cpp(80): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\adtenla\desktop\sgi\proyectos\practica 5\practica 5\reloj.cpp(93): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\adtenla\desktop\sgi\proyectos\practica 5\practica 5\reloj.cpp(179): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+c:\users\adtenla\desktop\sgi\proyectos\practica 5\practica 5\reloj.cpp(180): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+c:\users\adtenla\desktop\sgi\proyectos\practica 5\practica 5\reloj.cpp(181): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+c:\users\adtenla\desktop\sgi\proyectos\practica 5\practica 5\reloj.cpp(198): warning C4326: el tipo de valor devuelto de 'main' debe ser 'int' en lugar de 'void'
+  Practica 5.vcxproj -> C:\Users\adtenla\Desktop\SGI\Proyectos\Practica 5\Debug\Practica 5.exe
