@@ -1,15 +1,15 @@
 /**
-*  Animacion.cpp
+*  Reloj.cpp
 *
-*  Ejemplos de animacion en OpenGL
+*  Practica 5
 *
-*  @author:   rvivo@upv.es
-*  @version:  v1.0 Nov,2018
+*  @author:   adtenla@inf.upv.es
+*  @version:  v1.1 Nov,2018
 *  @require:  freeglut, utilidades
 *
 **/
 
-#define PROYECTO "ISGI::S5E01::Animacion"
+#define PROYECTO "Practica 5 - Reloj"
 
 #include <iostream>
 #include <sstream>
@@ -145,7 +145,7 @@ void display()
 	
 	FPS();
 }
-
+#pragma warning(disable : 4996)
 void reshape(GLint w, GLint h)
 {
 	// Toda el area como marco
@@ -165,6 +165,15 @@ void reshape(GLint w, GLint h)
 
 	// Camara perspectiva
 	gluPerspective(20, ra, 0.2, 10);
+	//Actualizar Hora
+	time_t rawtime;
+	struct tm * timeinfo;
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+	//sacar tiempos
+	segundo = timeinfo->tm_sec;
+	minuto = timeinfo->tm_min;
+	hora = timeinfo->tm_hour;
 }
 #pragma warning(disable : 4996)
 void update()
@@ -184,6 +193,7 @@ void update()
 	glutPostRedisplay();
 
 }
+
 
 void onTimer(int tiempo)
 {
@@ -206,7 +216,7 @@ void main(int argc, char** argv)
 	// Callbacks
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
-	//glutIdleFunc(update);
+	//glutIdleFunc(idle);
 	glutTimerFunc(1000 / 50, onTimer, 1000 / 50);
 
 	cout << PROYECTO << " en marcha" << endl;
