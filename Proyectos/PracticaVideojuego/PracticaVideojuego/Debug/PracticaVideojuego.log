@@ -1,0 +1,9 @@
+﻿  Interfaz_de_Conduccion.cpp
+c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(29): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
+c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(30): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
+c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(35): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
+c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(36): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
+c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(38): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
+c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(252): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\adtenla\desktop\sgi\proyectos\practicavideojuego\practicavideojuego\interfaz_de_conduccion.cpp(145): warning C4326: el tipo de valor devuelto de 'main' debe ser 'int' en lugar de 'void'
+  PracticaVideojuego.vcxproj -> C:\Users\adtenla\Desktop\SGI\Proyectos\PracticaVideojuego\Debug\PracticaVideojuego.exe

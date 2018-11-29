@@ -11,25 +11,43 @@ Dependencias:
 #include <Utilidades.h>
 
 using namespace std;
-double static velocidadx,velocidadz = 0;
-double static posicionx = 0;
-double static posicionz = 0;
+double static velocidad = 0; //Modulo de la velocidad
+double static alpha = 0; // Angulo de la velocidad
+double static PosX = 0;
+double static PosZ = 0;
+double static MirarX = 1;
+double static MirarZ = 0;
+bool static inicio = TRUE;
 
-void AumentarVelocidadX() {
-	if (velocidadx < 1)
-		velocidadx += 0.2;
+
+void GirarIzquierda() {
+	if (alpha < 0.1) {
+		alpha += 0.01;
+	}
 }
-void ReducirVelocidadX() {
-	if (velocidadx >= 0.2)
-		velocidadx -= 0.2;
+void GirarDerecha() {
+	if (alpha > -0.1) {
+		alpha -= 0.01;
+	}
 }
-void AumentarVelocidadZ() {
-	if (velocidadz < 1.5)
-		velocidadz += 0.5;
+void AumentarVelocidad() {
+	if (velocidad < 1) {
+		velocidad += 0.01;
+	}
 }
-void ReducirVelocidadZ() {
-	if (velocidadz > 0.5)
-		velocidadz -= 0.5;
+void ReducirVelocidad() {
+	if (velocidad >=0.1) {
+		velocidad -= 0.01;
+	}
+}
+void Calculodeposicioncamara() {
+	PosX = PosX + (velocidad * cos(alpha));
+	PosZ = PosZ + (velocidad * -sin(alpha));
+	MirarX = velocidad * cos(alpha);
+	MirarZ = velocidad * -sin(alpha);
+	cout << PosX << " PosX " << PosZ << " PosZ " << MirarX << " MirarX " << MirarZ << " MirarZ " << endl;
+	cout << velocidad << " Velocidad " << alpha << " alpha " << endl;
+
 }
 void init()
 //Inicializaciones
@@ -44,30 +62,44 @@ void onDisplay()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(posicionx, 1, posicionz, 1, 1, 0, 0, 1, 0); // Posiciona la camara
+	if (inicio){
+		gluLookAt(0, 1, 0, 1, 1, 0, 0, 1, 0);
+	}
+	else {
+		Calculodeposicioncamara();
+		/*double static PosX = 0;
+		double static PosZ = 0;
+		double static MirarX = 1;
+		double static MirarZ = 0;*/
+		gluLookAt(PosX, 1, PosZ, MirarX, 1, MirarZ, 0, 1, 0); // Posiciona la camara
+	}
 	//Creacion del circuito
-	GLfloat v0[3] = { 0,0,5 }, v1[3] = { 20,0,5 }, v2[3] = { 20,0,-5 }, v3[3] = { 0,0,-5 };
+	GLfloat v0[3] = { -10,0,10 }, v1[3] = { 20,0,10 }, v2[3] = { 20,0,-10 }, v3[3] = { -10,0,-10 };
 	glPolygonMode(GL_FRONT, GL_LINE);
 	glColor3f(0, 1, 0);
-	quad(v0, v1, v2, v3, 10, 5);
+	quad(v0, v1, v2, v3, 20, 10);
 	glutSwapBuffers();
 }
-void onSpecialKey(unsigned char tecla, int x, int y)
+void onSpecialKey(int tecla, int x, int y)
 {
 	// Callback de atencion al teclado
 
 	switch (tecla) {
 	case GLUT_KEY_UP:
-		AumentarVelocidadZ();
+		AumentarVelocidad();
+		inicio = false;
 		break;
 	case GLUT_KEY_DOWN:
-		ReducirVelocidadZ();
+		ReducirVelocidad();
+		inicio = false;
 		break;
 	case GLUT_KEY_LEFT:
-		ReducirVelocidadX();
+		GirarIzquierda();
+		inicio = false;
 		break;
 	case GLUT_KEY_RIGHT:
-		AumentarVelocidadX();
+		GirarDerecha();
+		inicio = false;
 		break;
 	}
 
@@ -89,8 +121,7 @@ void onReshape(int w, int h)
 void update()
 {
 	// Fase de actualizacion
-	posicionx = posicionx + velocidadx;
-	posicionz = posicionz + velocidadz;
+	Calculodeposicioncamara();
 
 	// Mandar evento de redibujo
 	glutPostRedisplay();
@@ -120,7 +151,7 @@ void main(int argc, char** argv)
 	glutReshapeFunc(onReshape);
 	glutDisplayFunc(onDisplay);
 	glutTimerFunc(1000 / 50, onTimer, 1000 / 50);
-	glutKeyboardFunc(onSpecialKey);
+	glutSpecialFunc(onSpecialKey);
 	glutIdleFunc(onIdle);
 	init();
 	glutMainLoop();
