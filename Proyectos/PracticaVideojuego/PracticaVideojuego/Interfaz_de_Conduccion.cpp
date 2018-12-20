@@ -17,18 +17,19 @@ double static PosX = 0;
 double static PosZ = 0;
 double static MirarX = 1;
 double static MirarZ = 0;
-double static incremento = 0;
+double static last = 0;
+
 bool static inicio = TRUE;
 
 
 void GirarIzquierda() {
 	if (alpha < 1) {
-		alpha += 0.05;
+		alpha += 0.01;
 	}
 }
 void GirarDerecha() {
 	if (alpha > -1) {
-		alpha -= 0.05;
+		alpha -= 0.01;
 	}
 }
 void AumentarVelocidad() {
@@ -78,11 +79,23 @@ void onDisplay()
 		gluLookAt(PosX, 1, PosZ, MirarX, 1, MirarZ, 0, 1, 0); // Posiciona la camara
 	}
 	//Creacion del circuito
-	GLfloat v0[3] = { -10,0,10 }, v1[3] = { 50,0,10 }, v2[3] = { 50,0,-10 }, v3[3] = { -10,0,-10 };
+	 
+		
+	int i = PosX;
+
+	GLfloat v0[3] = { i-10,0,10 }, v1[3] = { i+10 + 10,0,10 }, v2[3] = { i+1 + 10,0,10 }, v3[3] = { i+1+10,0,-10 };
 	glPolygonMode(GL_FRONT, GL_LINE);
-	glColor3f(0, 1, 0);
-	quad(v0, v1, v2, v3, 20, 10);
+	glColor3f(1, 0.5, 0.5);
+	quad(v0, v1, v2, v3, 30, 20);
+		
 	glutSwapBuffers();
+	
+	/* GLfloat v0[3] = { -10,0,10 }, v1[3] = { 50,0,10 }, v2[3] = { 50,0,-10 }, v3[3] = { -10,0,-10 };
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glColor3f(0, 1, 0);
+		quad(v0, v1, v2, v3, 20, 10);
+	*/
+	
 }
 void onSpecialKey(int tecla, int x, int y)
 {
