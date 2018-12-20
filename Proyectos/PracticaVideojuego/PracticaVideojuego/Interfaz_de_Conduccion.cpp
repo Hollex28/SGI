@@ -17,36 +17,40 @@ double static PosX = 0;
 double static PosZ = 0;
 double static MirarX = 1;
 double static MirarZ = 0;
+double static incremento = 0;
 bool static inicio = TRUE;
 
 
 void GirarIzquierda() {
-	if (alpha < 0.1) {
-		alpha += 0.01;
+	if (alpha < 1) {
+		alpha += 0.05;
 	}
 }
 void GirarDerecha() {
-	if (alpha > -0.1) {
-		alpha -= 0.01;
+	if (alpha > -1) {
+		alpha -= 0.05;
 	}
 }
 void AumentarVelocidad() {
-	if (velocidad < 1) {
+	if (velocidad < 0.2) {
 		velocidad += 0.01;
 	}
 }
 void ReducirVelocidad() {
-	if (velocidad >=0.1) {
+	if (velocidad >=-0.2) {
 		velocidad -= 0.01;
 	}
 }
 void Calculodeposicioncamara() {
+	// V = vo + e * (t-to)
 	PosX = PosX + (velocidad * cos(alpha));
 	PosZ = PosZ + (velocidad * -sin(alpha));
-	MirarX = velocidad * cos(alpha);
-	MirarZ = velocidad * -sin(alpha);
-	cout << PosX << " PosX " << PosZ << " PosZ " << MirarX << " MirarX " << MirarZ << " MirarZ " << endl;
-	cout << velocidad << " Velocidad " << alpha << " alpha " << endl;
+	//MirarX = PosX + (abs(velocidad) * cos(alpha));
+	//MirarZ = PosZ + (abs(velocidad) * -sin(alpha));
+	MirarX = PosX + cos(alpha);
+	MirarZ = PosZ - sin(alpha);
+	cout << "PosX " << PosX << " MirarX " << MirarX << endl;
+	
 
 }
 void init()
@@ -74,7 +78,7 @@ void onDisplay()
 		gluLookAt(PosX, 1, PosZ, MirarX, 1, MirarZ, 0, 1, 0); // Posiciona la camara
 	}
 	//Creacion del circuito
-	GLfloat v0[3] = { -10,0,10 }, v1[3] = { 20,0,10 }, v2[3] = { 20,0,-10 }, v3[3] = { -10,0,-10 };
+	GLfloat v0[3] = { -10,0,10 }, v1[3] = { 50,0,10 }, v2[3] = { 50,0,-10 }, v3[3] = { -10,0,-10 };
 	glPolygonMode(GL_FRONT, GL_LINE);
 	glColor3f(0, 1, 0);
 	quad(v0, v1, v2, v3, 20, 10);
