@@ -1,6 +1,1 @@
-﻿  Practica1.cpp
-c:\users\adtenla\desktop\sgi\proyectos\practica1\practica1\practica1.cpp(20): warning C4326: el tipo de valor devuelto de 'main' debe ser 'int' en lugar de 'void'
-  Generando código
-  All 15 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
-  Generación de código finalizada
-  Practica1.vcxproj -> C:\Users\adtenla\Desktop\SGI\Proyectos\Practica1\Release\Practica1.exe
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.WindowsSDK.targets(46,5): error MSB8036: No se encontró la versión del SDK de Windows 10.0.17134.0. Instale la versión requerida del SDK de Windows o cambie la versión del SDK en las páginas de propiedades de proyecto o haciendo clic con el botón derecho en la solución y seleccionando "Redestinar solución".

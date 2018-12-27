@@ -1,12 +1,12 @@
 ﻿  Interfaz_de_Conduccion.cpp
-c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(29): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
-c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(30): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
-c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(35): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
-c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(36): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
-c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(38): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
-c:\users\adtenla\desktop\sgi\gl\include\utilidades.h(252): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
-c:\users\adtenla\desktop\sgi\proyectos\practicavideojuego\practicavideojuego\interfaz_de_conduccion.cpp(84): warning C4244: 'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
-c:\users\adtenla\desktop\sgi\proyectos\practicavideojuego\practicavideojuego\interfaz_de_conduccion.cpp(86): warning C4838: la conversión de 'int' en 'GLfloat' requiere una conversión de restricción
-c:\users\adtenla\desktop\sgi\proyectos\practicavideojuego\practicavideojuego\interfaz_de_conduccion.cpp(86): warning C4244: 'inicializando': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-c:\users\adtenla\desktop\sgi\proyectos\practicavideojuego\practicavideojuego\interfaz_de_conduccion.cpp(162): warning C4326: el tipo de valor devuelto de 'main' debe ser 'int' en lugar de 'void'
-  PracticaVideojuego.vcxproj -> C:\Users\adtenla\Desktop\SGI\Proyectos\PracticaVideojuego\Debug\PracticaVideojuego.exe
+c:\users\hollex\desktop\sgi\gl\include\utilidades.h(29): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
+c:\users\hollex\desktop\sgi\gl\include\utilidades.h(30): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
+c:\users\hollex\desktop\sgi\gl\include\utilidades.h(35): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
+c:\users\hollex\desktop\sgi\gl\include\utilidades.h(36): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
+c:\users\hollex\desktop\sgi\gl\include\utilidades.h(38): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
+c:\users\hollex\desktop\sgi\gl\include\utilidades.h(252): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\practicavideojuego\practicavideojuego\interfaz_de_conduccion.cpp(84): warning C4244: 'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\practicavideojuego\practicavideojuego\interfaz_de_conduccion.cpp(86): warning C4838: la conversión de 'int' en 'GLfloat' requiere una conversión de restricción
+c:\users\hollex\desktop\sgi\proyectos\practicavideojuego\practicavideojuego\interfaz_de_conduccion.cpp(86): warning C4244: 'inicializando': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\practicavideojuego\practicavideojuego\interfaz_de_conduccion.cpp(162): warning C4326: el tipo de valor devuelto de 'main' debe ser 'int' en lugar de 'void'
+  PracticaVideojuego.vcxproj -> C:\Users\Hollex\Desktop\SGI\Proyectos\PracticaVideojuego\PracticaVideojuego\PracticaVideojuego.exe

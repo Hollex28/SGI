@@ -4,7 +4,7 @@ SGI :: Practica 1
 ********************************************************************/
 #define PROYECTO "Practica1 SG1"
 #include <iostream>
-#include <gl/freeglut.h>
+#include <gl/glut.h>
 
 using namespace std;
 void display()
