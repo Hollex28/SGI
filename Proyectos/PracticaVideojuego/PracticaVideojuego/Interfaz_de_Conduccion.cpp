@@ -11,7 +11,7 @@ Dependencias:
 #include <Utilidades.h>
 
 using namespace std;
-double static velocidad = 0; //Modulo de la velocidad
+double static velocidad = 0; //Modulo de la velocidad en m/s
 double static alpha = 0; // Angulo de la velocidad
 double static PosX = 0;
 double static PosZ = 0;
@@ -43,16 +43,47 @@ void ReducirVelocidad() {
 	}
 }
 void Calculodeposicioncamara() {
-	// V = vo + e * (t-to)
+	static int antes = 0;
+	int ahora, t;
+	ahora = glutGet(GLUT_ELAPSED_TIME);			//Tiempo transcurrido desde el inicio
+	t = ahora - antes;
+	antes = ahora;
+	// V = vo + a * (t-to)
+	//e=e0+V*(t-to)+1/2a*(t-to)^2
 	PosX = PosX + (velocidad * cos(alpha));
 	PosZ = PosZ + (velocidad * -sin(alpha));
 	//MirarX = PosX + (abs(velocidad) * cos(alpha));
 	//MirarZ = PosZ + (abs(velocidad) * -sin(alpha));
 	MirarX = PosX + cos(alpha);
 	MirarZ = PosZ - sin(alpha);
-	cout << "PosX " << PosX << " MirarX " << MirarX << endl;
+	//cout << "sin t " << PosX << " con t " << PosX + (velocidad * cos(alpha)) << endl;
+	//cout << "X " << PosX << "Z " << PosZ << "Sin T  X: " << PosX + (velocidad * cos(alpha)) << "Z: " << PosZ + (velocidad * -sin(alpha))*t << "\n";
 	
 
+}
+void GeneracionCircuito(int tamañoX) {
+	double static lastXQ;
+	if (inicio) {
+		//Creacion del circuito
+
+		GLfloat v0[3] = { 0,0,1 }, v1[3] = { tamañoX,0,1 }, v2[3] = { tamañoX,0,-1 }, v3[3] = { 0,0,-1 };
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glColor3f(0, 1, 0);
+		quad(v0, v3, v2, v1, 10, 10);
+		glutSwapBuffers();
+		lastXQ = tamañoX;
+	}
+	else {
+		if (PosX >= lastXQ - 1) {
+			//Creacion del circuito
+			GLfloat v0[3] = { lastXQ - 1,0,1 }, v1[3] = { lastXQ + tamañoX - 1,0,1 }, v2[3] = { lastXQ + tamañoX - 1,0,-1 }, v3[3] = { lastXQ - 1,0,-1 };
+			glPolygonMode(GL_FRONT, GL_LINE);
+			glColor3f(0, 0, 1);
+			quad(v0, v3, v2, v1, 10, 10);
+			glutSwapBuffers();
+			lastXQ = lastXQ + tamañoX;
+		}
+	}
 }
 void init()
 //Inicializaciones
@@ -69,32 +100,19 @@ void onDisplay()
 	glLoadIdentity();
 	if (inicio){
 		gluLookAt(0, 1, 0, 1, 1, 0, 0, 1, 0);
+		GeneracionCircuito(50);
 	}
 	else {
-		Calculodeposicioncamara();
 		/*double static PosX = 0;
 		double static PosZ = 0;
 		double static MirarX = 1;
 		double static MirarZ = 0;*/
 		gluLookAt(PosX, 1, PosZ, MirarX, 1, MirarZ, 0, 1, 0); // Posiciona la camara
+		GeneracionCircuito(50);
 	}
-	//Creacion del circuito
-	 
-		
-	int i = PosX;
 
-	GLfloat v0[3] = { i-10,0,10 }, v1[3] = { i+10 + 10,0,10 }, v2[3] = { i+1 + 10,0,10 }, v3[3] = { i+1+10,0,-10 };
-	glPolygonMode(GL_FRONT, GL_LINE);
-	glColor3f(1, 0.5, 0.5);
-	quad(v0, v1, v2, v3, 30, 20);
 		
-	glutSwapBuffers();
 	
-	/* GLfloat v0[3] = { -10,0,10 }, v1[3] = { 50,0,10 }, v2[3] = { 50,0,-10 }, v3[3] = { -10,0,-10 };
-		glPolygonMode(GL_FRONT, GL_LINE);
-		glColor3f(0, 1, 0);
-		quad(v0, v1, v2, v3, 20, 10);
-	*/
 	
 }
 void onSpecialKey(int tecla, int x, int y)
@@ -133,16 +151,14 @@ void onReshape(int w, int h)
 	glLoadIdentity();
 	float razon = (float)w / h;
 	/* CAMARA PERSPECTIVA */
-	gluPerspective(60, razon, 1, 10);
+	gluPerspective(45, razon, 1, 60);
 }
 void update()
 {
-	// Fase de actualizacion
 	Calculodeposicioncamara();
 
 	// Mandar evento de redibujo
 	glutPostRedisplay();
-
 }
 void onTimer(int tiempo)
 {
@@ -156,6 +172,11 @@ void onTimer(int tiempo)
 void onIdle()
 // Funcion de atencion al evento idle
 {
+	// Fase de actualizacion
+	Calculodeposicioncamara();
+
+	// Mandar evento de redibujo
+	glutPostRedisplay();
 
 }
 void main(int argc, char** argv)
