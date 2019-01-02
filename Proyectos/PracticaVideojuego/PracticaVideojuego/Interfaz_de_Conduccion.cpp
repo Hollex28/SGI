@@ -62,28 +62,14 @@ void Calculodeposicioncamara() {
 
 }
 void GeneracionCircuito(int tamañoX) {
-	double static lastXQ;
-	if (inicio) {
-		//Creacion del circuito
+	int i = PosX;
 
-		GLfloat v0[3] = { 0,0,1 }, v1[3] = { tamañoX,0,1 }, v2[3] = { tamañoX,0,-1 }, v3[3] = { 0,0,-1 };
-		glPolygonMode(GL_FRONT, GL_LINE);
-		glColor3f(0, 1, 0);
-		quad(v0, v3, v2, v1, 10, 10);
-		glutSwapBuffers();
-		lastXQ = tamañoX;
-	}
-	else {
-		if (PosX >= lastXQ - 1) {
-			//Creacion del circuito
-			GLfloat v0[3] = { lastXQ - 1,0,1 }, v1[3] = { lastXQ + tamañoX - 1,0,1 }, v2[3] = { lastXQ + tamañoX - 1,0,-1 }, v3[3] = { lastXQ - 1,0,-1 };
-			glPolygonMode(GL_FRONT, GL_LINE);
-			glColor3f(0, 0, 1);
-			quad(v0, v3, v2, v1, 10, 10);
-			glutSwapBuffers();
-			lastXQ = lastXQ + tamañoX;
-		}
-	}
+	GLfloat v0[3] = { i - 1,0,5 }, v1[3] = { i + tamañoX,0,5 }, v2[3] = { i + tamañoX,0,-5 }, v3[3] = { i - 1,0,-5 };
+	glPolygonMode(GL_FRONT, GL_LINE);
+	glColor3f(1, 0.5, 0.5);
+	quad(v0, v3, v2, v1, 30, 20);
+	glutSwapBuffers();
+
 }
 void init()
 //Inicializaciones
