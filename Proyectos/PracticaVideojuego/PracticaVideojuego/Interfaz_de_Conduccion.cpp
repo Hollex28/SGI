@@ -20,8 +20,9 @@ double static MirarZ = 0;
 double static last = 0;
 
 bool static inicio = TRUE;
+/*double funcionCarretera(double x) {
 
-
+}*/
 void GirarIzquierda() {
 	if (alpha < 1) {
 		alpha += 0.01;
@@ -38,7 +39,7 @@ void AumentarVelocidad() {
 	}
 }
 void ReducirVelocidad() {
-	if (velocidad >=-0.2) {
+	if (velocidad >=0.01) {
 		velocidad -= 0.01;
 	}
 }
@@ -50,25 +51,31 @@ void Calculodeposicioncamara() {
 	antes = ahora;
 	// V = vo + a * (t-to)
 	//e=e0+V*(t-to)+1/2a*(t-to)^2
-	PosX = PosX + (velocidad * cos(alpha));
-	PosZ = PosZ + (velocidad * -sin(alpha));
+	PosX = PosX + (velocidad * cos(alpha))*t;
+	PosZ = PosZ + (velocidad * -sin(alpha))*t;
 	//MirarX = PosX + (abs(velocidad) * cos(alpha));
 	//MirarZ = PosZ + (abs(velocidad) * -sin(alpha));
-	MirarX = PosX + cos(alpha);
-	MirarZ = PosZ - sin(alpha);
+	MirarX = PosX + cos(alpha)*t;
+	MirarZ = PosZ - sin(alpha)*t;
 	//cout << "sin t " << PosX << " con t " << PosX + (velocidad * cos(alpha)) << endl;
 	//cout << "X " << PosX << "Z " << PosZ << "Sin T  X: " << PosX + (velocidad * cos(alpha)) << "Z: " << PosZ + (velocidad * -sin(alpha))*t << "\n";
-	
+	glutSwapBuffers();
 
 }
 void GeneracionCircuito(int tamañoX) {
 	int i = PosX;
-
+	double static FinQuak;
+	if (inicio) { FinQuak = -10000; }
 	GLfloat v0[3] = { i - 1,0,5 }, v1[3] = { i + tamañoX,0,5 }, v2[3] = { i + tamañoX,0,-5 }, v3[3] = { i - 1,0,-5 };
 	glPolygonMode(GL_FRONT, GL_LINE);
 	glColor3f(1, 0.5, 0.5);
 	quad(v0, v3, v2, v1, 30, 20);
-	glutSwapBuffers();
+	
+	if (i>=FinQuak-20 || i == 0) {
+		FinQuak = i + tamañoX;
+		glutSwapBuffers();
+		cout << "genero, POSX = " << i << "Fin de Quak = " << FinQuak<<"\n";
+	}
 
 }
 void init()
@@ -137,7 +144,7 @@ void onReshape(int w, int h)
 	glLoadIdentity();
 	float razon = (float)w / h;
 	/* CAMARA PERSPECTIVA */
-	gluPerspective(45, razon, 1, 60);
+	gluPerspective(45, razon, 1, 20);
 }
 void update()
 {
@@ -161,8 +168,6 @@ void onIdle()
 	// Fase de actualizacion
 	Calculodeposicioncamara();
 
-	// Mandar evento de redibujo
-	glutPostRedisplay();
 
 }
 void main(int argc, char** argv)
