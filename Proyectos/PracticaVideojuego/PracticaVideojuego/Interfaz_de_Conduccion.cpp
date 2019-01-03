@@ -17,43 +17,26 @@ double static PosX = 0;
 double static PosZ = 0;
 double static MirarX = 1;
 double static MirarZ = 0;
-double static last = 0;
-const float pi = 3.1415;
-
 bool static inicio = TRUE;
-double static NormalX = 0;
-double static NormalZ = 0;
-float static A = 1;//A=1,5
-float static T = 10;//T=20,400 funcionan mas o menos bien
-
-double funcionCarretera(double x) {
-	double res = A * sin(x * (2 * pi) / T);
-	return res;
-}
-
-double DerivadafuncionCarretera(double x) {
-	double res = ((2 * pi*A) / T) * cos(x* ((2 * pi) / T));
-	return res;
-}
-
-void CalculoVNormal(double x) {
-	double operador = 0;
-	operador = 1 / (sqrt(1 + DerivadafuncionCarretera(x)));
-	NormalX = operador * - DerivadafuncionCarretera(x);
-	NormalZ = operador;
+float static A = 10;//A=1,5
+float static T = 200;//T=20,400 funcionan mas o menos bien
+int static last = -1;
+float trazado(float x, float amplitud, float periodo)
+{
+	return amplitud * sin(x * ((2 * PI) / periodo));
 }
 void GirarIzquierda() {
 	if (alpha < 1) {
-		alpha += 0.01;
+		alpha += 0.02;
 	}
 }
 void GirarDerecha() {
 	if (alpha > -1) {
-		alpha -= 0.01;
+		alpha -= 0.02;
 	}
 }
 void AumentarVelocidad() {
-	if (velocidad < 0.2) {
+	if (velocidad < 0.05) {
 		velocidad += 0.01;
 	}
 }
@@ -81,60 +64,21 @@ void Calculodeposicioncamara() {
 	glutSwapBuffers();
 
 }
+
 void GeneracionCircuito(int tamañoX) {
-
-	float i;
-	double static FinQuak;
-	double Zant = funcionCarretera(PosX-1);
-	double Zpost;
-	double X;
-	CalculoVNormal(PosX + (velocidad * cos(alpha)));
-	if (inicio) { FinQuak = -10000; }
-	for (i = -1; i <= tamañoX; i=i+0.1) {
-		X = PosX-1 + (velocidad * cos(alpha)) + i;
-		Zpost = funcionCarretera(i + tamañoX);
-		GLfloat v0[3] = { X - (NormalX * A / 2),0,Zant - (NormalZ * A / 2) },
-			v3[3] = { X + (NormalX * A / 2),0,Zant + (NormalZ * A / 2) };
-		/*if (i == 0 && inicio) {
-			cout << "Vn(Xn,Yn,Zn): v0 = ( " << X - (NormalX * 5 / 2) << " , 0 , " << Zant - (NormalZ * 5 / 2) << "), v3 =  " << X + (NormalX * 5 / 2) << " , 0, " << Zant + (NormalZ * 5 / 2);
-		}*/
-		CalculoVNormal(PosX+1);
-		GLfloat	v2[3] = { X+1 - (NormalX * A / 2),0,Zant - (NormalZ * A / 2) },
-			v1[3] = { X+1 + (NormalX * A / 2),0,Zant + (NormalZ * A / 2) };
+
+	for (auto i = PosX-1; i < PosX+tamañoX; i++)
+	{
+		GLfloat v0[3] = { i,0,trazado(i, A, T) - 4 }, v3[3] = { i + 2,0,trazado(i, A, T) }, v2[3] = { i+1 + 2,0, trazado(i + 1, A, T) }, v1[3] = { i+1,0, trazado(i + 1, A, T) - 4 };
+		glPushMatrix();
 		glPolygonMode(GL_FRONT, GL_LINE);
 		glColor3f(1, 0.5, 0.5);
-		quad(v0, v2, v1, v3, 30, 20);
-		Zant = Zpost;
-		/*if (i == 0 && inicio) {
-			cout << "), v2 = ( " << X+1 - (NormalX * 5 / 2) << " , 0 , " << Zant - (NormalZ * 5 / 2) << "), v3 =  " << X+1 + (NormalX * 5 / 2) << " , 0, " << Zant + (NormalZ * 5 / 2)<< ")\n";
-		}*/
+
+		quad(v3, v0, v1, v2, 30, 30);
+		glPopMatrix();
 	}
 
-	if (i >= FinQuak - 10 || i == -1) {//La condicion 1<=FinQuak-20 el -20 se saca del campo de vision que hay puesto en el reshape
-		FinQuak = i + tamañoX;
-		glutSwapBuffers();
-		//cout << "genero, POSX = " << i << "Fin de Quak = " << FinQuak << "\n";
-	}
 }
-
-/*void GeneracionCircuito(int tamañoX) {
-	double i = PosX;
-	double static FinQuak;
-	if (inicio) { FinQuak = -10000; }
-	double Zant = funcionCarretera(i - 1);
-	double Zpost = funcionCarretera(i + tamañoX);
-	GLfloat v0[3] = { i - 1,0,Zant+5/2 }, v1[3] = { i + tamañoX,0,Zpost+5/2 },
-			v2[3] = { i + tamañoX,0,Zpost-5/2 }, v3[3] = { i - 1,0,Zant-5/2 };
-	glPolygonMode(GL_FRONT, GL_LINE);
-	glColor3f(1, 0.5, 0.5);
-	quad(v0, v3, v2, v1, 30, 20);
-	
-	if (i>=FinQuak-10 || i == 0) {//La condicion 1<=FinQuak-20 el -20 se saca del campo de vision que hay puesto en el reshape
-		FinQuak = i + tamañoX;
-		glutSwapBuffers();
-		cout << "genero, POSX = " << i << "Fin de Quak = " << FinQuak<<"\n";
-	}
-}*/
 void init()
 //Inicializaciones
 {
@@ -150,7 +94,6 @@ void onDisplay()
 	glLoadIdentity();
 	if (inicio){
 		gluLookAt(0, 1, 0, 1, 1, 0, 0, 1, 0);
-		GeneracionCircuito(20);
 	}
 	else {
 		/*double static PosX = 0;
@@ -158,8 +101,10 @@ void onDisplay()
 		double static MirarX = 1;
 		double static MirarZ = 0;*/
 		gluLookAt(PosX, 1, PosZ, MirarX, 1, MirarZ, 0, 1, 0); // Posiciona la camara
-		GeneracionCircuito(20);
+
 	}
+	GeneracionCircuito(200);
+	glutSwapBuffers();
 
 		
 	
