@@ -21,6 +21,7 @@ bool static inicio = TRUE;
 float static A = 10;//A=1,5
 float static T = 200;//T=20,400 funcionan mas o menos bien
 int static last = -1;
+static float coef[16];
 float trazado(float x, float amplitud, float periodo)
 {
 	return amplitud * sin(x * ((2 * PI) / periodo));
@@ -85,12 +86,33 @@ void init()
 	// Mensajes por consola
 	cout << PROYECTO << " running" << endl;
 	cout << "Version: OpenGL " << glGetString(GL_VERSION) << endl;
-	glClearColor(1.0, 1.0, 1.0, 1.0); // Color de fondo
+	glClearColor(0.0, 0.0, 0.0, 1.0); // Color de fondo
+	// LIGHT2: FOCAL
+	GLfloat Al2[] = { 0.2,0.2,0.2,1.0 }; // Color ambiental de la luz
+	GLfloat Dl2[] = { 1.0,1.0,1.0,1.0 }; // Color difuso de la luz
+	GLfloat Sl2[] = { 0.3,0.3,0.3,1.0 }; // Color especular de la luz
+	glLightfv(GL_LIGHT2, GL_AMBIENT, Al2); // Caracteristicas de LIGHT2
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, Dl2);
+	glLightfv(GL_LIGHT2, GL_SPECULAR, Sl2);
+	glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 25.0);
+	glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, 20.0);
+	glEnable(GL_LIGHT2);
+	// Caracteristicas del render
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
 };
 void onDisplay()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	GLfloat posicion[] = { 0,0,0,1 };
+	glLightfv(GL_LIGHT2, GL_POSITION, posicion); // Luz focal sobre la camara
+	GLfloat dir_central[] = { 0.0, 0.0, -1.0 }; // Direccion del foco la de la vista
+	glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, dir_central);
+	glRotatef(-sin(alpha), 0, 1, 0); // 2.Aplicamos el giro actual en Y fijo
+	glMultMatrixf(coef); // 1.Aplicamos el giro anterior
+	glGetFloatv(GL_MODELVIEW_MATRIX, coef);
 	glLoadIdentity();
 	if (inicio){
 		gluLookAt(0, 1, 0, 1, 1, 0, 0, 1, 0);
@@ -103,7 +125,7 @@ void onDisplay()
 		gluLookAt(PosX, 1, PosZ, MirarX, 1, MirarZ, 0, 1, 0); // Posiciona la camara
 
 	}
-	GeneracionCircuito(200);
+	GeneracionCircuito(100);
 	glutSwapBuffers();
 
 		
