@@ -22,6 +22,7 @@ static float displacement = 0.0;
 static float speed = 0, despX = 0, despZ = 1;
 static float PosX = 0, PosY = 1, PosZ = 0;
 static float LastZ = 0;
+static float CieloLZ = 0;
 
 static float angulo = 7.5;
 
@@ -223,18 +224,58 @@ void banner(float x, float y, float z, float angle, float base, float height, GL
 
 }
 
-void skybox() {
+void Cielo(int Area2) {
 
 	glPushMatrix();
 	glBindTexture(GL_TEXTURE_2D, skybox_texture);
 	backgroundObjectParams(skybox_texture);
-	glBegin(GL_QUAD_STRIP);
-	for (int i = 0; i <= 10; i++) {
-		float angle = i * 2 * PI / 10;
-		glTexCoord2f(i * 1.0 / 10, 0);
-		glVertex3f(220 * cos(angle), 200 * -0.5, 220 * sin(angle));
-		glTexCoord2f(i * 1.0 / 10, 1);
-		glVertex3f(220 * cos(angle), 200 *  0.7, 220 * sin(angle));
+	glBegin(GL_QUADS);
+	int altura = 10; //Altura del ciero
+	float aux = (PosZ / Area2); //Saco la parte decimal de la cantidad de cielo recorrido de la parte generada
+	//cout <<"aux = "<< aux << " PosZ = "<< PosZ << "Area2= "<< Area2 << "\n";
+	int aux1 = (int)aux;
+	aux = aux - aux1;
+	
+	if (aux > 0.6 || PosZ == 0) {
+		cout << "aux = " << aux << " PosZ = " << PosZ << "Area2= " << Area2 << "\n";
+		/*glTexCoord2f(0, 1);
+		glVertex3f(-Area2, altura, PosZ); //4
+		glTexCoord2f(1, 1);
+		glVertex3f(Area2, altura, PosZ);  //3
+		glTexCoord2f(1, 0);
+		glVertex3f(Area2, altura, (PosZ - Area2)); //2
+		glTexCoord2f(0, 0);
+		glVertex3f(-Area2, altura, (PosZ - Area2));//1
+		LastZ = PosZ;*/
+		glTexCoord2f(0, 0);
+		glVertex3f(-Area2, altura, (PosZ + Area2));//1
+		glTexCoord2f(1, 0);
+		glVertex3f(Area2, altura, (PosZ + Area2)); //2
+		glTexCoord2f(1, 1);
+		glVertex3f(Area2, altura, PosZ);  //3
+		glTexCoord2f(0, 1);
+		glVertex3f(-Area2, altura, PosZ); //4
+		CieloLZ = PosZ+1;
+	}
+	else {
+		/*		
+		glTexCoord2f(0, 1);
+		glVertex3f(-Area2, altura, LastZ); //4
+		glTexCoord2f(1, 1);
+		glVertex3f(Area2, altura, LastZ);  //3
+		glTexCoord2f(1, 0);
+		glVertex3f(Area2, altura, (LastZ + Area2)); //2
+		glTexCoord2f(0, 0);
+		glVertex3f(-Area2, altura, (LastZ + Area2));//1
+		*/
+		glTexCoord2f(0, 0);
+		glVertex3f(-Area2, altura, (CieloLZ + Area2));//1
+		glTexCoord2f(1, 0);
+		glVertex3f(Area2, altura, (CieloLZ + Area2)); //2
+		glTexCoord2f(1, 1);
+		glVertex3f(Area2, altura, CieloLZ);  //3
+		glTexCoord2f(0, 1);
+		glVertex3f(-Area2, altura, CieloLZ); //4
 	}
 	glEnd();
 	glPopMatrix();
@@ -247,19 +288,10 @@ void floor(int Area2,int numero) {
 		glPushMatrix();
 		backgroundObjectParams(terreno);
 		glBegin(GL_QUADS);
-		/*glTexCoord2f(0, 1);
-		glVertex3f(PosZ-Area2, below, (PosZ-2)+(Area2*i)); //4
-		glTexCoord2f(1, 1);
-		glVertex3f(PosZ+Area2, below, (PosZ - 2) + (Area2*i));  //3
-		glTexCoord2f(1, 0);
-		glVertex3f(PosZ+Area2, below, (PosZ - Area2) + (Area2*i)); //2
-		glTexCoord2f(0, 0);
-		glVertex3f(PosZ-Area2, below, (PosZ - Area2) + (Area2*i));//1
-		*/
 		float aux = (PosZ / Area2); //Saco la parte decimal de la cantidad de carretera recorrida de la parte generada
 		int aux1 = (int)aux;
 		aux = aux - aux1;
-		if ( aux >0.99|| PosZ == 0) {
+		if ( aux > 0.99|| PosZ == 0) {
 			glTexCoord2f(0, 0);
 			glVertex3f(-Area2, below, (PosZ - Area2) + (Area2*i));//1
 			glTexCoord2f(1, 0);
@@ -380,11 +412,11 @@ void populate_world() {
 	lightingPole(v4[0], v4[1], v4[2]+1, GL_LIGHT3);
 	lightingPole(v1[0], v1[1], v1[2]+1, GL_LIGHT4);
 	lightingPole(v2[0], v2[1], v2[2]+1, GL_LIGHT5);
-	int area = 20; //area de un segmento de carretera
+	int area = 50; //area de un segmento de carretera
 	int Nseg = 5;
-	int incerteza = 10;
-	GeneracionCircuito(70);
+	GeneracionCircuito(100);
 	floor(area, Nseg);//tamaño de 1 segmento de carretera indivisual + numero de segmentos generados
+	Cielo(100);
 	//space_ship(-10, 0, -25, 0, 2, 10, 4, 2, spaceship);
 	//space_ship(-10, 0, 25, 189, 2, 10, 4, 2, spaceship);
 	//space_ship(50, 0, 70, 90, 2, 10, 5, 2, spaceship);
@@ -393,7 +425,7 @@ void populate_world() {
 		banner(-5, 2, i, 0, 0.6, 2, bannerCheckboard);
 	}
 
-	//skybox();
+	
 
 	
 }
@@ -498,7 +530,7 @@ void reshape(GLint w, GLint h)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	float razon = (float)w / h;
-	gluPerspective(45, razon, 1, 100);
+	gluPerspective(45, razon, 1, 100);//TAG: VISION
 }
 
 void logic()
@@ -537,21 +569,21 @@ void onArrow(int tecla, int x, int y)
 {
 	switch (tecla) {
 	case GLUT_KEY_UP:
-		cout << PosX << " X,  " << PosZ << " Z \n";
+		//cout << PosX << " X,  " << PosZ << " Z \n";
 		if (speed < 15) speed += 0.5;
 		break;
 	case GLUT_KEY_DOWN:
-		cout << PosX << " X,  " << PosZ << " Z \n";
+		//cout << PosX << " X,  " << PosZ << " Z \n";
 		if (speed > 0.1) speed -= 1;
 		else speed = 0.0;
 		break;
 	case GLUT_KEY_LEFT:
-		cout << angulo << " Angulo";
+		//cout << angulo << " Angulo";
 		angulo += 0.75;
 		break;
 	case GLUT_KEY_RIGHT:
 		angulo -= 0.75;
-		cout << angulo << " Angulo";
+		//cout << angulo << " Angulo";
 		break;
 	}
 	
