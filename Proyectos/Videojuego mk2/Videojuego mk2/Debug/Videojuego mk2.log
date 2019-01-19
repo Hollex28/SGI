@@ -5,54 +5,63 @@ c:\users\hollex\desktop\sgi\gl\include\utilidades.h(35): warning C4305: 'inicial
 c:\users\hollex\desktop\sgi\gl\include\utilidades.h(36): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
 c:\users\hollex\desktop\sgi\gl\include\utilidades.h(38): warning C4305: 'inicializando': truncamiento de 'double' a 'const GLfloat'
 c:\users\hollex\desktop\sgi\gl\include\utilidades.h(252): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(47): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(53): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(48): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
 c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(54): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(65): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(67): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(79): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(55): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(66): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(68): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
 c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(80): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(92): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(81): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
 c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(93): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(233): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(234): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(236): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(264): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(264): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(266): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(94): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(250): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(252): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(254): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(256): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
 c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(266): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(268): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
 c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(268): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(270): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
 c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(270): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(275): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(275): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(277): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(277): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(279): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(279): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(281): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(272): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
 c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(281): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(305): warning C4244: 'argumento': conversión de 'float' a 'GLint'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(307): warning C4244: 'argumento': conversión de 'float' a 'GLint'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(320): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(322): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(342): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(345): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(352): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(353): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(362): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(364): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(366): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(368): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(368): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(393): warning C4305: 'argumento': truncamiento de 'double' a 'float'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(393): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(449): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(451): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(470): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(472): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(559): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(560): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(595): warning C4326: el tipo de valor devuelto de 'main' debe ser 'int' en lugar de 'void'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(283): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(285): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(287): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(296): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(298): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(300): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(302): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(349): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(349): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(351): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(351): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(353): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(353): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(355): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(355): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(361): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(361): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(363): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(363): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(365): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(365): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(367): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(367): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(388): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(390): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(409): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(412): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(419): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(420): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(429): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(431): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(433): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(435): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(435): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(501): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(503): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(522): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(524): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(616): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(617): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+c:\users\hollex\desktop\sgi\proyectos\videojuego mk2\videojuego mk2\coche.cpp(652): warning C4326: el tipo de valor devuelto de 'main' debe ser 'int' en lugar de 'void'
   Videojuego mk2.vcxproj -> C:\Users\Hollex\Desktop\SGI\Proyectos\Videojuego mk2\Videojuego mk2\Videojuego mk2.exe

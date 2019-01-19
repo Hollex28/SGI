@@ -5,7 +5,7 @@
 #include <sstream>
 #include <ctime> 
 
-#define PROYECTO "Fzero"
+#define PROYECTO "Tatooine"
 #define PI 3.1415926
 #define tasaFPS 60
 
@@ -16,7 +16,7 @@ static enum { SOLID, WIRE } RENDER_MODE;
 static enum { DAY, NIGHT } TIME_OF_DAY;
 static enum { CLEAR, FOGGY } WEATHER;
 static enum { SPEED_OFF, SPEED_ON } UI;
-static int lightingPoles[] = { GL_LIGHT3, GL_LIGHT4, GL_LIGHT5, GL_LIGHT6 };
+static int lightingPoles[] = { GL_LIGHT2,GL_LIGHT3, GL_LIGHT4, GL_LIGHT5, GL_LIGHT6 };
 
 static float displacement = 0.0;
 static float speed = 0, despX = 0, despZ = 1;
@@ -26,7 +26,7 @@ static float CieloLZ = 0;
 
 static float angulo = 7.5;
 
-static GLuint coche, track, skybox_texture, bannerCheckboard, terreno, grid, spaceship;
+static GLuint coche, track, sky_texture, bannerCheckboard, terreno, grid, spaceship, Horizonte_texture;
 
 time_t h, m, s;
 
@@ -110,9 +110,13 @@ void loadtextures() {
 	glBindTexture(GL_TEXTURE_2D, track);
 	loadImageFile((char*)"carretera.jpg");
 
-	glGenTextures(1, &skybox_texture);
-	glBindTexture(GL_TEXTURE_2D, skybox_texture);
-	loadImageFile((char*)"skybox.png");
+	glGenTextures(1, &sky_texture);
+	glBindTexture(GL_TEXTURE_2D, sky_texture);
+	loadImageFile((char*)"sky.jpg");
+
+	glGenTextures(1, &Horizonte_texture);
+	glBindTexture(GL_TEXTURE_2D,Horizonte_texture);
+	loadImageFile((char*)"Horizonte.png");
 
 	glGenTextures(1, &terreno);
 	glBindTexture(GL_TEXTURE_2D, terreno);
@@ -150,7 +154,7 @@ void init()
 
 }
 
-void lightingPole(float x, float y, float z,GLuint light) {
+void PostedeLuz(float x, float y, float z,GLuint light) {
 	glPushMatrix();
 	GLfloat posicionL2[] = { x,y,z,1 };//farola1
 	glLightfv(light, GL_POSITION, posicionL2);
@@ -184,11 +188,15 @@ void GeneracionCircuito(int tamaño) {
 
 		quad(v3, v0, v1, v2, 30, 30);
 		glPopMatrix();
+		//generar Luz
+		PostedeLuz(v4[0], v4[1], v4[2] + 1, GL_LIGHT3);
+		PostedeLuz(v1[0], v1[1], v1[2] + 1, GL_LIGHT4);
+		PostedeLuz(v2[0], v2[1], v2[2] + 1, GL_LIGHT5);
 	}
 
 }
 
-void banner(float x, float y, float z, float angle, float base, float height, GLuint texture) {
+/*void banner(float x, float y, float z, float angle, float base, float height, GLuint texture) {
 
 	glPushMatrix();
 	glTranslatef(x, y, z);
@@ -222,13 +230,13 @@ void banner(float x, float y, float z, float angle, float base, float height, GL
 
 	glPopMatrix();
 
-}
+}*/
 
 void Cielo(int Area2) {
 
 	glPushMatrix();
-	glBindTexture(GL_TEXTURE_2D, skybox_texture);
-	backgroundObjectParams(skybox_texture);
+	glBindTexture(GL_TEXTURE_2D, sky_texture);
+	backgroundObjectParams(sky_texture);
 	glBegin(GL_QUADS);
 	int altura = 10; //Altura del ciero
 	float aux = (PosZ / Area2); //Saco la parte decimal de la cantidad de cielo recorrido de la parte generada
@@ -236,38 +244,67 @@ void Cielo(int Area2) {
 	int aux1 = (int)aux;
 	aux = aux - aux1;
 	
-	if (aux > 0.6 || PosZ == 0) {
-		cout << "aux = " << aux << " PosZ = " << PosZ << "Area2= " << Area2 << "\n";
-		/*glTexCoord2f(0, 1);
-		glVertex3f(-Area2, altura, PosZ); //4
-		glTexCoord2f(1, 1);
-		glVertex3f(Area2, altura, PosZ);  //3
-		glTexCoord2f(1, 0);
-		glVertex3f(Area2, altura, (PosZ - Area2)); //2
-		glTexCoord2f(0, 0);
-		glVertex3f(-Area2, altura, (PosZ - Area2));//1
-		LastZ = PosZ;*/
-		glTexCoord2f(0, 0);
-		glVertex3f(-Area2, altura, (PosZ + Area2));//1
-		glTexCoord2f(1, 0);
-		glVertex3f(Area2, altura, (PosZ + Area2)); //2
-		glTexCoord2f(1, 1);
-		glVertex3f(Area2, altura, PosZ);  //3
-		glTexCoord2f(0, 1);
-		glVertex3f(-Area2, altura, PosZ); //4
-		CieloLZ = PosZ+1;
-	}
-	else {
-		/*		
-		glTexCoord2f(0, 1);
-		glVertex3f(-Area2, altura, LastZ); //4
-		glTexCoord2f(1, 1);
-		glVertex3f(Area2, altura, LastZ);  //3
-		glTexCoord2f(1, 0);
-		glVertex3f(Area2, altura, (LastZ + Area2)); //2
-		glTexCoord2f(0, 0);
-		glVertex3f(-Area2, altura, (LastZ + Area2));//1
-		*/
+	//if (aux > 0.6 || PosZ == 0) {//generar nuevo segmento
+		//cielo
+	glTexCoord2f(0, 0);
+	glVertex3f(-Area2, altura, (PosZ + Area2));//1
+	glTexCoord2f(1, 0);
+	glVertex3f(Area2, altura, (PosZ + Area2)); //2
+	glTexCoord2f(1, 1);
+	glVertex3f(Area2, altura, PosZ-20);  //3
+	glTexCoord2f(0, 1);
+	glVertex3f(-Area2, altura, PosZ-20); //4
+	CieloLZ = PosZ+1;
+	glEnd();
+	glPopMatrix();
+		//Horizonte, delante
+	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, Horizonte_texture);
+	backgroundObjectParams(Horizonte_texture);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3f(-Area2, 0, (PosZ +70));//1
+	glTexCoord2f(1, 0);
+	glVertex3f(Area2, 0, (PosZ +70)); //2
+	glTexCoord2f(1, 1);
+	glVertex3f(Area2, altura, (PosZ + 70));  //3
+	glTexCoord2f(0, 1);
+	glVertex3f(-Area2, altura, (PosZ + 70)); //4
+	glEnd();
+	glPopMatrix();
+		//LADO DER
+	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, Horizonte_texture);
+	backgroundObjectParams(Horizonte_texture);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3f(-Area2/2, 0, PosZ-20);//1
+	glTexCoord2f(1, 0);
+	glVertex3f(-Area2/2, 0, (PosZ + 70)); //2
+	glTexCoord2f(1, 1);
+	glVertex3f(-Area2/2, altura, (PosZ + 70));  //3
+	glTexCoord2f(0, 1);
+	glVertex3f(-Area2/2, altura, PosZ-20); //4
+	glEnd();
+	glPopMatrix();
+		//LADO IZQ
+	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D, Horizonte_texture);
+	backgroundObjectParams(Horizonte_texture);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3f(Area2 / 2, 0, PosZ + 70 );//1
+	glTexCoord2f(1, 0);
+	glVertex3f(Area2 / 2, 0, (PosZ - 20)); //2
+	glTexCoord2f(1, 1);
+	glVertex3f(Area2 / 2, altura, (PosZ - 20));  //3
+	glTexCoord2f(0, 1);
+	glVertex3f(Area2 / 2, altura, PosZ + 70); //4
+	glEnd();
+	glPopMatrix();
+	//}
+	/* Codigo para mantener un segmento de cielo/Horizonte statico
+	  else {//statico,sin generar nuevo
 		glTexCoord2f(0, 0);
 		glVertex3f(-Area2, altura, (CieloLZ + Area2));//1
 		glTexCoord2f(1, 0);
@@ -276,9 +313,25 @@ void Cielo(int Area2) {
 		glVertex3f(Area2, altura, CieloLZ);  //3
 		glTexCoord2f(0, 1);
 		glVertex3f(-Area2, altura, CieloLZ); //4
-	}
-	glEnd();
-	glPopMatrix();
+		glEnd();
+		glPopMatrix();
+		//Horizonte, delante
+		glPushMatrix();
+		glBindTexture(GL_TEXTURE_2D, sky_texture);
+		backgroundObjectParams(sky_texture);
+		glBegin(GL_QUADS);
+		glTexCoord2f(0, 0);
+		glVertex3f(-Area2, 0, (CieloLZ + 70));//1
+		glTexCoord2f(1, 0);
+		glVertex3f(Area2, 0, (CieloLZ + 70)); //2
+		glTexCoord2f(1, 1);
+		glVertex3f(Area2, altura, (CieloLZ + 70));  //3
+		glTexCoord2f(0, 1);
+		glVertex3f(-Area2, altura, (CieloLZ + 70)); //4
+		glEnd();
+		glPopMatrix();
+	}*/
+
 
 }
 
@@ -302,6 +355,7 @@ void floor(int Area2,int numero) {
 			glVertex3f(-Area2, below, (PosZ)+((Area2)*i)); //4
 			LastZ = PosZ;
 
+
 		}else{
 			glTexCoord2f(0, 0);
 			glVertex3f(-Area2, below, (LastZ - Area2) + (Area2*i));//1
@@ -320,42 +374,23 @@ void floor(int Area2,int numero) {
 }
 
 
-void space_ship(float x, float y, float z, float angle, float base, float height, float slices, float stacks, GLuint texture) {
-
-	glPushMatrix();
-	glTranslatef(x, y, z);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-	if (TIME_OF_DAY == DAY) {
-		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-	}
-	else { glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); }
-	glRotatef(angle, 0, 1, 0);
-	if (RENDER_MODE == SOLID) {
-		glutSolidCone(base, height, slices, stacks);
-	}
-	else { glutWireCone(base, height, slices, stacks); }
-	glPopMatrix();
-
-
-}
-
 void car() {
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_LIGHTING);
 	glPushMatrix();
 	backgroundObjectParams(coche);	
 	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3f(-0.5, 0.1, -2);
-	glTexCoord2f(1, 0);
-	glVertex3f(0.5, 0.1, -2);
-	glTexCoord2f(1, 1);
-	glVertex3f(0.5, 0.5, -2);
-	glTexCoord2f(0, 1);
+	glTexCoord2f(0, 1);//1
 	glVertex3f(-0.5, 0.5, -2);
+	glTexCoord2f(1, 1);//2
+	glVertex3f(0.5, 0.5, -2);
+	glTexCoord2f(1, 0);//3
+	glVertex3f(0.5, 0.1, -2);
+	glTexCoord2f(0, 0);//4
+	glVertex3f(-0.5, 0.1, -2);
+
+
+
 	glEnd();
 	glPopMatrix();
 
@@ -407,27 +442,12 @@ void speedBar() {
 
 
 void populate_world() {
-
-	lightingPole(0, 0, 0,GL_LIGHT2);
-	lightingPole(v4[0], v4[1], v4[2]+1, GL_LIGHT3);
-	lightingPole(v1[0], v1[1], v1[2]+1, GL_LIGHT4);
-	lightingPole(v2[0], v2[1], v2[2]+1, GL_LIGHT5);
-	int area = 50; //area de un segmento de carretera
+	int area = 100; //area de un segmento de carretera
 	int Nseg = 5;
 	GeneracionCircuito(100);
 	floor(area, Nseg);//tamaño de 1 segmento de carretera indivisual + numero de segmentos generados
 	Cielo(100);
-	//space_ship(-10, 0, -25, 0, 2, 10, 4, 2, spaceship);
-	//space_ship(-10, 0, 25, 189, 2, 10, 4, 2, spaceship);
-	//space_ship(50, 0, 70, 90, 2, 10, 5, 2, spaceship);
-
-	for (int i = -10; i > -30; i -= 4) {
-		banner(-5, 2, i, 0, 0.6, 2, bannerCheckboard);
-	}
-
-	
-
-	
+	lighting();
 }
 
 void speed_bar_setting() {
@@ -478,7 +498,7 @@ void weather_setting() {
 	if (WEATHER == FOGGY) {
 		glPushMatrix();
 		glEnable(GL_FOG);
-		GLfloat colour[] = { 0.6,0.3,0.1 };
+		GLfloat colour[] = { 0.4,0.2,0.1 };
 		glFogfv(GL_FOG_COLOR, colour);
 		glFogf(GL_FOG_DENSITY, 0.2);
 		glPopMatrix();
@@ -501,16 +521,17 @@ void display()
 	//HeadLight
 	GLfloat posicionL1[] = { 0 ,0.7,0,1 };
 	glLightfv(GL_LIGHT1, GL_POSITION, posicionL1);
-	GLfloat dir_light1[] = { 0.0, -0.4, -0.7 };
+	GLfloat dir_light1[] = { 0.0, 0.4, 0.7 };
 	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, dir_light1);
 
 	speed_bar_setting();
 	glPushMatrix();
 	glTranslatef(0, -1, 0);
-	car();
+	//car();
 	glPopMatrix();
 
 	gluLookAt(PosX, 1, PosZ, PosX + despX, 1, PosZ + despZ, 0, 1, 0);
+	PostedeLuz(0, 1, 3, GL_LIGHT2);
 	//cout << "(" << PosX << "," << PosY << "," << PosZ << "," << PosX << "+" << despX << ",1," << PosZ << "+" << despZ << ")\n";
 
 	time_of_day_setting();
@@ -579,13 +600,17 @@ void onArrow(int tecla, int x, int y)
 		break;
 	case GLUT_KEY_LEFT:
 		//cout << angulo << " Angulo";
-		angulo += 0.75;
-		break;
+		if (angulo <= 73) {
+			angulo += 0.75;
+		}
+		break;//74.25
 	case GLUT_KEY_RIGHT:
-		angulo -= 0.75;
+		if (angulo >= -74){
+			angulo -= 0.75;
+		}
 		//cout << angulo << " Angulo";
 		break;
-	}
+	}//-75.75
 	
 	// Partimos la distancia en sus componentes basado en el angulo
 	despX = sin(angulo*PI / 180);
