@@ -21,12 +21,13 @@ static float speed = 0, despX = 0.296, despZ = 0.95;
 static float PosX = 0, PosY = 1, PosZ = 0;
 static float LastZ = 0;
 static float CieloLZ = 0;
+static bool DESIERTO1 = FALSE;
 
 		
 
 static float angulo = 7.5;
 
-static GLuint motospeeder, TextCarretera, sky_texture, terreno, Horizonte_texture,ad1,ad2,ad3,ad4;
+static GLuint motospeeder, TextCarretera, sky_texture, terreno, Horizonte_texture,ad1,ad2,ad3,ad4,desierto;
 
 time_t h, m, s;
 
@@ -87,6 +88,10 @@ void loadtextures() {
 	glBindTexture(GL_TEXTURE_2D,Horizonte_texture);
 	loadImageFile((char*)"Horizonte.png");
 
+	glGenTextures(1, &desierto);
+	glBindTexture(GL_TEXTURE_2D, desierto);
+	loadImageFile((char*)"Desierto.jpg");
+
 	glGenTextures(1, &terreno);
 	glBindTexture(GL_TEXTURE_2D, terreno);
 	loadImageFile((char*)"Arena2.jpg");
@@ -125,6 +130,7 @@ void init()
 	cout << "5. n : Cambia el estado de la niebla (on / off)\n";
 	cout << "6. n : Cambia el estado de la tormenta de arena (on / off)\n";
 	cout << "7. c : Cambia la visibilidad de elementos solidarios a la cámara(on / off):\n";
+	cout << "8. d : Cambia entre 2 horizontes distintos:\n";
 
 }
 
@@ -273,8 +279,15 @@ void Cielo(int Area2) {
 	glPopMatrix();
 		//Horizonte, delante
 	glPushMatrix();
-	glBindTexture(GL_TEXTURE_2D, Horizonte_texture);
-	backgroundObjectParams(Horizonte_texture);
+	if (DESIERTO1) {
+		glBindTexture(GL_TEXTURE_2D, Horizonte_texture);
+		backgroundObjectParams(Horizonte_texture);
+	}
+	else {
+
+		glBindTexture(GL_TEXTURE_2D, desierto);
+		backgroundObjectParams(desierto);
+	}
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 0);
 	glVertex3f(-Area2, 0, (PosZ +70));//1
@@ -288,8 +301,15 @@ void Cielo(int Area2) {
 	glPopMatrix();
 		//LADO DER
 	glPushMatrix();
-	glBindTexture(GL_TEXTURE_2D, Horizonte_texture);
-	backgroundObjectParams(Horizonte_texture);
+	if (DESIERTO1) {
+		glBindTexture(GL_TEXTURE_2D, Horizonte_texture);
+		backgroundObjectParams(Horizonte_texture);
+	}
+	else {
+
+		glBindTexture(GL_TEXTURE_2D, desierto);
+		backgroundObjectParams(desierto);
+	}
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 0);
 	glVertex3f(-Area2/2, 0, PosZ-20);//1
@@ -303,8 +323,17 @@ void Cielo(int Area2) {
 	glPopMatrix();
 		//LADO IZQ
 	glPushMatrix();
-	glBindTexture(GL_TEXTURE_2D, Horizonte_texture);
-	backgroundObjectParams(Horizonte_texture);
+
+	if (DESIERTO1) {
+		glBindTexture(GL_TEXTURE_2D, Horizonte_texture);
+		backgroundObjectParams(Horizonte_texture);
+	}
+	else {
+
+		glBindTexture(GL_TEXTURE_2D, desierto);
+		backgroundObjectParams(desierto);
+	}
+
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 0);
 	glVertex3f(Area2 / 2, 0, PosZ + 70 );//1
@@ -669,6 +698,10 @@ void onKey(unsigned char key, int x, int y)
 	case 'c':
 		if (UI == SPEED_ON) { UI = SPEED_OFF; }
 		else UI = SPEED_ON;
+		break;
+	case 'd':
+		if (DESIERTO1) { DESIERTO1=FALSE; }
+		else DESIERTO1=TRUE;
 		break;
 	case 27:
 		exit(0);
