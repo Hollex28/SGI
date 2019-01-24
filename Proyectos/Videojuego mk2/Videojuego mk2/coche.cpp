@@ -12,21 +12,21 @@
 static float ticks = 0;
 static const float tickRate = 1;
 
-static enum { SOLID, WIRE } RENDER_MODE;
-static enum { DAY, NIGHT } TIME_OF_DAY;
-static enum { CLEAR, FOGGY } WEATHER;
+static enum { TEXTURAS, MAYA } Dibujado;
+static enum { ON, OFF } LUCES;
+static enum { DESPEJADO, NIEBLA,TARENA } Clima;
 static enum { SPEED_OFF, SPEED_ON } UI;
-static int lightingPoles[] = { GL_LIGHT2,GL_LIGHT3, GL_LIGHT4, GL_LIGHT5, GL_LIGHT6 };
-
 static float displacement = 0.0;
-static float speed = 0, despX = 0, despZ = 1;
+static float speed = 0, despX = 0.296, despZ = 0.95;
 static float PosX = 0, PosY = 1, PosZ = 0;
 static float LastZ = 0;
 static float CieloLZ = 0;
 
+		
+
 static float angulo = 7.5;
 
-static GLuint coche, track, sky_texture, bannerCheckboard, terreno, grid, spaceship, Horizonte_texture;
+static GLuint motospeeder, TextCarretera, sky_texture, terreno, Horizonte_texture,ad1,ad2,ad3,ad4;
 
 time_t h, m, s;
 
@@ -35,24 +35,15 @@ float static T = 200;//T=20,400 funcionan mas o menos bien
 double static below = -0.001; // acercar un below mas ha 0 causa colisiones extrañas entre la carretera y el suelo
 static float coef[16];
 
-
-// Vertices
-static GLfloat v0[3] = { 2,0,30 }, v1[3] = { -2,0,30 }, v2[3] = { -2,0,-50 }, v3[3] = { 2,0,-30 };
-static GLfloat v4[3] = { 8,0,-35 }, v5[3] = { 6,0,-50 }, v6[3] = { 26,0,-35 }, v7[3] = { 28,0,-55 };
-static GLfloat v8[3] = { 55,0,-32 }, v9[3] = { 44,0,-30 }, v10[3] = { 40,0,-10 }, v11[3] = { 55,0,-12 };
-static GLfloat v12[3] = { 40,0,0 }, v13[3] = { 55,0,-2 }, v14[3] = { 42,0,32 }, v15[3] = { 38,0,30 };
-static GLfloat v16[3] = { 36,0,32 }, v17[3] = { 38,0,36 }, v18[3] = { 2,0,36 }, v19[3] = { 4,0,32 };
-
 float trazado(float x, float amplitud, float periodo)
 {
 	return amplitud * sin(x * ((2 * PI) / periodo));
 }
 
 void lighting() {
-
-	//Lunar Light
-	GLfloat Al0[] = { 0.05,0.05,0.05 };
-	GLfloat Dl0[] = { 0.05,0.05,0.05 };
+	//Luz de la luna
+	GLfloat Al0[] = { 0.1,0.1,0.1 };
+	GLfloat Dl0[] = { 0.1,0.1,0.1 };
 	GLfloat Sl0[] = { 0.0,0.0,0.0 };
 
 	glEnable(GL_LIGHT0);
@@ -61,9 +52,9 @@ void lighting() {
 	glLightfv(GL_LIGHT0, GL_SPECULAR, Sl0);
 
 
-	//Car Lighting
+	//Luz de la moto
 
-	GLfloat Al1[] = { 0.2,0.2,0.2,1.0 };
+	GLfloat Al1[] = { 1,1,1,1.0 };
 	GLfloat Dl1[] = { 1.0,1.0,1.0,1.0 };
 	GLfloat Sl1[] = { 0.3,0.3,0.3,1.0 };
 
@@ -74,40 +65,18 @@ void lighting() {
 	glLightfv(GL_LIGHT1, GL_SPECULAR, Sl1);
 	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 25);
 	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 20.0);
-
-	//Lighting Poles
-	GLfloat Alx[] = { 0.0, 0.0, 0.0, 1.0 };
-	GLfloat Dlx[] = { 0.5, 0.5, 0.2, 1.0 };
-	GLfloat Slx[] = { 0.3, 0.3, 0.3, 1.0 };
-
-	for (int i : lightingPoles) {
-		glEnable(i);
-		glLightfv(i, GL_AMBIENT, Alx);
-		glLightfv(i, GL_DIFFUSE, Dlx);
-		glLightfv(i, GL_SPECULAR, Slx);
-		glLightf(i, GL_SPOT_CUTOFF, 45.0);
-		glLightf(i, GL_SPOT_EXPONENT, 10.0);
-	}
-
-	// Material
-	GLfloat Dmx[] = { 0.8,0.8,0.8,1.0 };
-	GLfloat Smx[] = { 0.3,0.3,0.3,1.0 };
-	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, Dmx);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, Smx);
-	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 3);
-	glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
 }
 
 
 void loadtextures() {
 
-	glGenTextures(1, &coche);
-	glBindTexture(GL_TEXTURE_2D, coche);
-	loadImageFile((char*)"transcaptain falcon.png");
+	glGenTextures(1, &motospeeder);
+	glBindTexture(GL_TEXTURE_2D, motospeeder);
+	loadImageFile((char*)"motospeeder3.png");
 	glEnable(GL_TEXTURE_2D);
 
-	glGenTextures(1, &track);
-	glBindTexture(GL_TEXTURE_2D, track);
+	glGenTextures(1, &TextCarretera);
+	glBindTexture(GL_TEXTURE_2D, TextCarretera);
 	loadImageFile((char*)"carretera.jpg");
 
 	glGenTextures(1, &sky_texture);
@@ -122,17 +91,21 @@ void loadtextures() {
 	glBindTexture(GL_TEXTURE_2D, terreno);
 	loadImageFile((char*)"Arena2.jpg");
 
-	glGenTextures(1, &grid);
-	glBindTexture(GL_TEXTURE_2D, grid);
-	loadImageFile((char*)"grid.jpg");
+	glGenTextures(1, &ad1);
+	glBindTexture(GL_TEXTURE_2D, ad1);
+	loadImageFile((char*)"ad1.jpg");
 
-	glGenTextures(1, &bannerCheckboard);
-	glBindTexture(GL_TEXTURE_2D, bannerCheckboard);
-	loadImageFile((char*)"checkerBanner.jpg");
+	glGenTextures(1, &ad2);
+	glBindTexture(GL_TEXTURE_2D, ad2);
+	loadImageFile((char*)"ad2.jpg");
 
-	glGenTextures(1, &spaceship);
-	glBindTexture(GL_TEXTURE_2D, spaceship);
-	loadImageFile((char*)"space ship.jpg");
+	glGenTextures(1, &ad3);
+	glBindTexture(GL_TEXTURE_2D, ad3);
+	loadImageFile((char*)"ad3.jpg");
+
+	glGenTextures(1, &ad4);
+	glBindTexture(GL_TEXTURE_2D, ad4);
+	loadImageFile((char*)"ad4.jpg");
 
 }
 
@@ -147,10 +120,11 @@ void init()
 
 	cout << "1. Flecha izquierda/derecha: giro del vehículo\n";
 	cout << "2. Flecha arriba / abajo: aumento / disminución de la velocidad\n";
-	cout << "3. s : Activa / desactiva un modelo simple en alámbrico de la práctica 6 sin luces ni texturas \n";
-	cout << "4. l : Cambia entre modo diurno / nocturno\n";
-	cout << "5. n : Cambia el estado de la niebla(on / off)\n";
-	cout << "6. c : Cambia la visibilidad de elementos solidarios a la cámara(on / off):\n";
+	cout << "3. s : Activa / desactiva Modelo Inalambrico \n";
+	cout << "4. l : Cambia entre modo dia / noche\n";
+	cout << "5. n : Cambia el estado de la niebla (on / off)\n";
+	cout << "6. n : Cambia el estado de la tormenta de arena (on / off)\n";
+	cout << "7. c : Cambia la visibilidad de elementos solidarios a la cámara(on / off):\n";
 
 }
 
@@ -167,70 +141,110 @@ void backgroundObjectParams(GLuint texture) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-	if (TIME_OF_DAY == DAY) {
+	if (LUCES == ON) {
 		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+		GLfloat Dm[] = { 0.75,0.75,0.75,1.0 };
+		GLfloat Sm[] = { 0.53,0.53,0.53,1.0 };
+		GLfloat s = 1.0;
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, Dm);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, Sm);
+		glMaterialf(GL_FRONT, GL_SHININESS, s);
 	}
-	else { glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); }
+	else { 
+		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+		GLfloat Dm[] = { 0.8,0.8,0.8,1.0 };
+		GLfloat Sm[] = { 0.0,0.0,0.0,1.0 };
+		GLfloat s = 0.0;
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, Dm);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, Sm);
+		glMaterialf(GL_FRONT, GL_SHININESS, s);
+	}
 }
 
 void GeneracionCircuito(int tamaño) {
-	backgroundObjectParams(track);
+	//Carretera y Anuncios
+
 	for (auto i = -(PosZ + 1); i < PosZ + tamaño; i++)
 	{
+
 		//GLfloat v0[3] = { trazado(i, A, T) - 2,0,i }, v3[3] = { trazado(i, A, T) + 2,0,i }, v2[3] = { trazado(i + 1, A, T) + 2,0, i + 1 }, v1[3] = { trazado(i + 1, A, T) - 2,0, i + 1 };
 		GLfloat v1[3] = { trazado(i, A, T) - 2,0,i }, 
 			v2[3] = { trazado(i, A, T) + 2,0,i }, 
 			v3[3] = { trazado(i + 1, A, T) + 2,0, i + 1 }, 
 			v0[3] = { trazado(i + 1, A, T) - 2,0, i + 1 };
 		glPushMatrix();
+		backgroundObjectParams(TextCarretera);
 		glPolygonMode(GL_FRONT, GL_LINE);
 		glColor3f(1, 0.5, 0.5);
-
 		quad(v3, v0, v1, v2, 30, 30);
 		glPopMatrix();
-		//generar Luz
-		PostedeLuz(v4[0], v4[1], v4[2] + 1, GL_LIGHT3);
-		PostedeLuz(v1[0], v1[1], v1[2] + 1, GL_LIGHT4);
-		PostedeLuz(v2[0], v2[1], v2[2] + 1, GL_LIGHT5);
 	}
 
 }
 
-/*void banner(float x, float y, float z, float angle, float base, float height, GLuint texture) {
+void ads() {
+	int aux = (int)PosZ;
+	int multiplo100 = aux / 100;
+	int i1 = 100 * multiplo100 + 25;
+	int i2 = 100 * multiplo100 + 50;
+	int i3 = 100 * multiplo100 + 75;
+	int i4 = 100 * multiplo100 + 100;
 
-	glPushMatrix();
-	glTranslatef(x, y, z);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+	//Pos ad1
 
-	if (TIME_OF_DAY == DAY) {
-		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-	}
-	else { glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); }
-	if (TIME_OF_DAY == DAY) {
-		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-	}
-	else { glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); }
+		glPushMatrix();
+		GLfloat v1[3] = { trazado(i1, A, T) - 3,2,i1 },
+			v2[3] = { trazado(i1, A, T) + 3,2,i1 },
+			v3[3] = { trazado(i1, A, T) + 3,5, i1 },
+			v0[3] = { trazado(i1, A, T) - 3,5, i1 };
+
+		backgroundObjectParams(ad1);
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glColor3f(1, 0.5, 0.5);
+		quad(v3, v0, v1, v2, 30, 30);
+
+		//cout << "HOLA1\n";
+
+		//Pos ad2
+		GLfloat v5[3] = { trazado(i2, A, T) - 3,2,i2 },
+			v6[3] = { trazado(i2, A, T) + 3,2,i2 },
+			v7[3] = { trazado(i2, A, T) + 3,5, i2 },
+			v4[3] = { trazado(i2, A, T) - 3,5, i2 };
+
+		backgroundObjectParams(ad2);
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glColor3f(1, 0.5, 0.5);
+		quad(v7, v4, v5, v6, 30, 30);
+
+		//cout << "HOLA2\n";
+
+
+		//Pos ad3
+		GLfloat v9[3] = { trazado(i3, A, T) - 3,2,i3 },
+			v10[3] = { trazado(i3, A, T) + 3,2,i3 },
+			v11[3] = { trazado(i3, A, T) + 3,5, i3 },
+			v8[3] = { trazado(i3, A, T) - 3,5, i3 };
+
+		backgroundObjectParams(ad3);
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glColor3f(1, 0.5, 0.5);
+		quad(v11, v8, v9, v10, 30, 30);
+
+
+		//cout << "HOLA3\n";
+		//ad4
+		GLfloat v13[3] = { trazado(i4, A, T) - 3,2,i4 },
+			v14[3] = { trazado(i4, A, T) + 3,2,i4 },
+			v15[3] = { trazado(i4, A, T) + 3,5, i4 },
+			v12[3] = { trazado(i4, A, T) - 3,5, i4 };
+
+		backgroundObjectParams(ad4);
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glColor3f(1, 0.5, 0.5);
+		quad(v15, v12, v13, v14, 30, 30);
+		glPopMatrix();
 	
-	glRotatef(angle, 0, 1, 0);
-
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3f(-base, -height, 0);
-	glTexCoord2f(1, 0);
-	glVertex3f(base, -height, 0);
-	glTexCoord2f(1, 1);
-	glVertex3f(base,height, 0);
-	glTexCoord2f(0, 1);
-	glVertex3f(-base,height, 0);
-	glEnd();
-
-	glPopMatrix();
-
-}*/
+}
 
 void Cielo(int Area2) {
 
@@ -374,20 +388,22 @@ void floor(int Area2,int numero) {
 }
 
 
-void car() {
+
+
+void moto() {
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_LIGHTING);
 	glPushMatrix();
-	backgroundObjectParams(coche);	
+	backgroundObjectParams(motospeeder);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 1);//1
-	glVertex3f(-0.5, 0.5, -2);
+	glVertex3f(-0.2, 0.5, -2);
 	glTexCoord2f(1, 1);//2
-	glVertex3f(0.5, 0.5, -2);
+	glVertex3f(0.2, 0.5, -2);
 	glTexCoord2f(1, 0);//3
-	glVertex3f(0.5, 0.1, -2);
+	glVertex3f(0.2, 0.1, -2);
 	glTexCoord2f(0, 0);//4
-	glVertex3f(-0.5, 0.1, -2);
+	glVertex3f(-0.2, 0.1, -2);
 
 
 
@@ -448,6 +464,7 @@ void populate_world() {
 	floor(area, Nseg);//tamaño de 1 segmento de carretera indivisual + numero de segmentos generados
 	Cielo(100);
 	lighting();
+	ads();
 }
 
 void speed_bar_setting() {
@@ -459,8 +476,7 @@ void speed_bar_setting() {
 }
 
 void time_of_day_setting() {
-	if (TIME_OF_DAY == NIGHT) {
-		//glClearColor(0, 0, 0, 1);
+	if (LUCES == OFF) {
 
 		glPushMatrix();
 		glEnable(GL_LIGHTING);
@@ -481,8 +497,8 @@ void time_of_day_setting() {
 
 }
 
-void render_mode_setting() {
-	if (RENDER_MODE == WIRE) {
+void Modo_Dibujo() {
+	if (Dibujado == MAYA) {
 		glPushMatrix();
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glDisable(GL_TEXTURE_2D);
@@ -494,16 +510,24 @@ void render_mode_setting() {
 	}
 }
 
-void weather_setting() {
-	if (WEATHER == FOGGY) {
+void Climatologia() {
+	if (Clima == NIEBLA) {
 		glPushMatrix();
 		glEnable(GL_FOG);
-		GLfloat colour[] = { 0.4,0.2,0.1 };
+		GLfloat colour[] = { 0.2,0.2,0.2 };
 		glFogfv(GL_FOG_COLOR, colour);
-		glFogf(GL_FOG_DENSITY, 0.2);
+		glFogf(GL_FOG_DENSITY, 0.07);
 		glPopMatrix();
 	}
-	else {
+	if (Clima == TARENA) {
+		glPushMatrix();
+		glEnable(GL_FOG);
+		GLfloat colour[] = { 0.5,0.2,0.1 };
+		glFogfv(GL_FOG_COLOR, colour);
+		glFogf(GL_FOG_DENSITY, 0.07);
+		glPopMatrix();
+	}
+	if(Clima == DESPEJADO) {
 		glDisable(GL_FOG);
 	}
 }
@@ -519,24 +543,25 @@ void display()
 	glColor3f(0, 0, 0);
 
 	//HeadLight
-	GLfloat posicionL1[] = { 0 ,0.7,0,1 };
-	glLightfv(GL_LIGHT1, GL_POSITION, posicionL1);
-	GLfloat dir_light1[] = { 0.0, 0.4, 0.7 };
-	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, dir_light1);
+	GLfloat p_light1[] = { 0.0, 0.7, 0, 1.0 };
+	glLightfv(GL_LIGHT1, GL_POSITION, p_light1);
+	GLfloat d_light1[] = { 0.0, -0.5, -0.7 };
+	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, d_light1);
 
 	speed_bar_setting();
 	glPushMatrix();
 	glTranslatef(0, -1, 0);
-	//car();
+	moto();
 	glPopMatrix();
 
 	gluLookAt(PosX, 1, PosZ, PosX + despX, 1, PosZ + despZ, 0, 1, 0);
+
 	PostedeLuz(0, 1, 3, GL_LIGHT2);
 	//cout << "(" << PosX << "," << PosY << "," << PosZ << "," << PosX << "+" << despX << ",1," << PosZ << "+" << despZ << ")\n";
-
+	//(0,1,0,0.296,1,0.95502)
 	time_of_day_setting();
-	render_mode_setting();
-	weather_setting();
+	Modo_Dibujo();
+	Climatologia();
 
 
 	populate_world();
@@ -623,18 +648,22 @@ void onKey(unsigned char key, int x, int y)
 {
 	switch (key) {
 	case 's':
-		if (RENDER_MODE == WIRE) { RENDER_MODE = SOLID; }
-		else RENDER_MODE = WIRE;
+		if (Dibujado == MAYA) { Dibujado = TEXTURAS; }
+		else Dibujado = MAYA;
 		break;
 
 	case 'l':
-		if (TIME_OF_DAY == NIGHT) { TIME_OF_DAY = DAY; }
-		else TIME_OF_DAY = NIGHT;
+		if (LUCES == OFF) { LUCES = ON; }
+		else LUCES = OFF;
 		break;
 
 	case 'n':
-		if (WEATHER == FOGGY) { WEATHER = CLEAR; }
-		else WEATHER = FOGGY;
+		if (Clima == NIEBLA) { Clima = DESPEJADO; }
+		else Clima = NIEBLA;
+		break;
+	case 'm':
+		if (Clima == TARENA) { Clima = DESPEJADO; }
+		else Clima = TARENA;
 		break;
 
 	case 'c':
